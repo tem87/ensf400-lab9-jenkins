@@ -12,17 +12,16 @@ This lab will be performed in [GitHub CodeSpaces](https://github.com/codespaces)
 
 ## Run Jenkins in Docker Compose
 
-In this tutorial, you’ll be running Jenkins as a Docker container from the [`jenkins/jenkins:lts-jdk17`](https://hub.docker.com/r/jenkins/jenkins) Docker image.
+In this tutorial, you’ll be running Jenkins as Docker container customized from the base image [`jenkins/jenkins:alpine`](https://hub.docker.com/r/jenkins/jenkins) Docker image.
 
 Run the following command to boot up Jenkins using Docker Compose:
 
 ```bash
 $ docker compose up -d
 ```
+The image will automatically be built, which is to install Docker on the Jenkins Alpine base image.
 
-Note that after Jenkins is up and running in the container, there will be a port `8080` automatically forwarded for external access. Open the link on your browser to access the service. You will see the `Unlock Jenkins` page.
-
-Proceed to the [Setup wizard](https://jenkins.io/doc/tutorials/build-a-python-app-with-pyinstaller/#setup-wizard).
+Note that after Jenkins is up and running in the container, there will be a port `8080` automatically forwarded for external access. 
 
 
 ## Accessing the Jenkins Docker container
@@ -31,54 +30,60 @@ You may access the Jenkins container (through a separate terminal/command prompt
 
 ```bash
 $ docker compose exec -it jenkins bash
-root@603a0bbe39dc:/# 
+8122ba5d44f1:/# exit
+exit
 ```
 
-## Setup wizard
-
-Before you can access Jenkins, there are a few quick "one-off" steps you’ll need to perform.
-
-### Unlocking Jenkins
+## Unlocking Jenkins
 
 When you first access a new Jenkins instance, you are asked to unlock it using an automatically-generated password.
 
-After the 2 sets of asterisks appear in the terminal/command prompt window, browse the mapped URL, for instance, `https://shiny-acorn-r74pgq4g552p76g.github.dev/` (the URL will be different on your Codespaces instance), and wait until the **Unlock Jenkins** page appears.
+Browse the mapped URL, for instance, `https://shiny-acorn-r74pgq4g552p76g.github.dev/` (the URL will be different on your Codespaces instance)
 
-![Unlock Jenkins page](https://jenkins.io/doc/book/resources/tutorials/setup-jenkins-01-unlock-jenkins-page.jpg)
+<p align='center'><img src='images/1-mapped-url.png' width='600px'></img></p>
+
+Wait until the `Unlock Jenkins` page appears.
+
+<p align='center'><img src='images/2-unlock-jenkins.png' width='600px'></img></p>
 
 From your terminal/command prompt window again, use the following command to output Jenkins logs:
+
 ```bash
 $ docker compose logs jenkins
 ```
 Copy the automatically-generated alphanumeric password (between the 2 sets of asterisks).
 
-![Copying initial admin password](https://jenkins.io/doc/book/resources/tutorials/setup-jenkins-02-copying-initial-admin-password.png)
+<p align='center'><img src='images/3-initial-password.png' width='600px'></img></p>
 
-On the **Unlock Jenkins** page, paste this password into the **Administrator password** field and click **Continue**.
+On the `Unlock Jenkins` page, paste this password into the `Administrator password` field and click `Continue`.
 
 
-### Customizing Jenkins with plugins
+## Customizing Jenkins with plugins
 
-After [unlocking Jenkins](https://jenkins.io/doc/tutorials/build-a-python-app-with-pyinstaller/#unlocking-jenkins), the `Customize Jenkins` page appears.
+After unlocking Jenkins, the `Customize Jenkins` page appears.
 
 On this page, click `Install Suggested Plugins`.
 
+<p align='center'><img src='images/4-custom-jenkins.png' width='600px'></img></p>
+
 The setup wizard shows the progression of Jenkins being configured and the suggested plugins being installed. This process may take a few minutes.
 
-### Creating the first administrator user
+## Creating the first administrator user
 
 Finally, Jenkins asks you to create your first administrator user.
 
 1. When the `Create First Admin User` page appears, specify your details in the respective fields and click `Save and Continue`, `Save and Finish`.
 1. When the `Jenkins is ready!` page appears, click `Start using Jenkins`.
 1. If required, log in to Jenkins with the credentials of the user you just created and you’re ready to start using Jenkins!
-1. Install `docker` plugin.
-Manage Jenkins -> Plugins -> Available Plugins -> Docker Pipeline
 
+**IMPORTANT:** Install `Docker Pipeline` plugin:
+`Dashboard -> Manage Jenkins -> Plugins -> Available Plugins -> Docker Pipeline`
 
-### Stopping and restarting Jenkins
+<p align='center'><img src='images/5-install-docker-plugin.png' width='600px'></img></p>
 
-To restart the Jenkins/Blue Ocean Docker container:
+## Stopping and restarting Jenkins
+
+Ater installing `Docker Pipeline` plugin, we MUST  restart the Jenkins:
 
 1. Run the following command:
     ```bash
@@ -97,7 +102,7 @@ Obtain the simple "add" Python application from GitHub, by forking the sample re
 
 1. Clone your forked `simple-python-pyinstaller-app` repository (on GitHub) locally to your machine. 
 
-### Create your initial Pipeline as a Jenkinsfile
+## Create your initial Pipeline as a Jenkinsfile
 
 You’re now ready to create your Pipeline that will automate building your Python application with PyInstaller in Jenkins. Your Pipeline will be created as a `Jenkinsfile`, which will be committed to your locally cloned Git repository (`simple-python-pyinstaller-app`).
 
@@ -136,6 +141,8 @@ Go back to Jenkins again.
 
 Click `Create a job`. Choose a job name, e.g., `Simple App`. Then select `Pipeline`.
 
+<p align='center'><img src='images/6-create-job.png' width='600px'></img></p>
+
 Select the `GitHub Project` checkbox, and then fill in the GitHub project URL, e.g.,
 
 ```
@@ -148,7 +155,15 @@ In the `Pipeline` Section, change the dropdown list value of `Definition` to `Pi
 https://github.com/stedrew/simple-python-pyinstaller-app
 ```
 
-Go to the `Dashboard`, you will be able to see the newly created `sample` project. Click into the project and on the left side, click `Build now` to build the project.
+<p align='center'><img src='images/7-job-config.png' width='600px'></img></p>
+
+Click `Save` to save the job configuration. Go to the `Dashboard`, you will be able to see the newly created `Simple App` project. Click into the project and on the left side, click `Build Now` to build the project.
+
+<p align='center'><img src='images/8-build-now.png' width='600px'></img></p>
+
+You may click into the build history with the build number to see the details of the build, including the console output:
+
+<p align='center'><img src='images/9-build-output.png' width='600px'></img></p>
 
 
 ## Add a test stage to your Pipeline
@@ -216,11 +231,15 @@ git commit -a -m "Add Test stage"
 git push origin
 ```
 
-Go back to Jenkins again.
+Go back to Jenkins again and click `Build Now`. It may take a few minutes for the `qnib:pytest` Docker image to download (if this hasn’t already been done).
 
-Click **Run** at the top left, then quickly click the **OPEN** link which appears briefly at the lower-right to see Jenkins running your amended Pipeline project. If you weren’t able to click the **OPEN** link, click the *top* row on the Blue Ocean interface to access this feature.
-   **Note:** It may take a few minutes for the `qnib:pytest` Docker image to download (if this hasn’t already been done).
-   If your amended Pipeline ran successfully, here’s what the Blue Ocean interface should look like. Notice the additional "Test" stage. You can click on the previous "Build" stage circle to access the output from that stage.
+If your amended Pipeline ran successfully, here’s what the the interface should look like. Notice the additional "Test" stage. 
+
+<p align='center'><img src='images/10-pipeline-overview.png' width='600px'></img></p>
+
+Test report:
+<p align='center'><img src='images/11-test-result.png' width='600px'></img></p>
+
 
 ## Add a final deliver stage to your Pipeline
 
@@ -306,9 +325,8 @@ git commit -a -m "Add Deliver stage"
 git push origin
 ```
 
-Go back to Jenkins again.
+Go back to Jenkins again and click `Build Now`.
 
-Click **Run** at the top left, then quickly click the **OPEN** link which appears briefly at the lower-right to see Jenkins running your amended Pipeline project. If you weren’t able to click the **OPEN** link, click the *top* row on the Blue Ocean interface to access this feature.
 
 ### Follow up
 
