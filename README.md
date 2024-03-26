@@ -332,9 +332,9 @@ Go back to Jenkins again and click `Build Now`.
 
 If you use Linux, you can try running the standalone `add2vals` application you generated with PyInstaller locally on your machine. To do this:
 
-1. From the main Jenkins interface, access your last Pipeline run you performed [above](https://jenkins.io/doc/tutorials/build-a-python-app-with-pyinstaller/#add-a-final-deliver-stage-to-your-pipeline). To do this, click the top row (representing the most recent Pipeline run) on the main Jenkins’s **Activity** page.
+1. From the main Jenkins interface, access your last Pipeline run you performed [above](https://jenkins.io/doc/tutorials/build-a-python-app-with-pyinstaller/#add-a-final-deliver-stage-to-your-pipeline). To do this, click the top row (representing the most recent Pipeline run) on the main Jenkins Activity page.
 
-2. On the results page of the Pipeline run, click **Artifacts** at the top right to access the **Artifacts** page.
+2. On the results page of the Pipeline run, click `Build Artifacts`.
 
 3. In the list of artifacts, click the down-arrow icon at the far right of the **dist/add2vals** artifact item to download the standalone executable file to your browser’s "Downloads" directory.
 
