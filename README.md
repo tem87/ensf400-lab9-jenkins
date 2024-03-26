@@ -241,7 +241,7 @@ Test report:
 <p align='center'><img src='images/11-test-result.png' width='600px'></img></p>
 
 
-## Add a final deliver stage to your Pipeline
+## Add a final delivery stage to your Pipeline
 
 Go back to your text editor/IDE and ensure your `Jenkinsfile` is open.
 
@@ -332,7 +332,7 @@ Go back to Jenkins again and click `Build Now`.
 
 If you use Linux, you can try running the standalone `add2vals` application you generated with PyInstaller locally on your machine. To do this:
 
-1. From the main Blue Ocean interface, access your last Pipeline run you performed [above](https://jenkins.io/doc/tutorials/build-a-python-app-with-pyinstaller/#add-a-final-deliver-stage-to-your-pipeline). To do this, click the top row (representing the most recent Pipeline run) on the main Blue Ocean’s **Activity** page.
+1. From the main Jenkins interface, access your last Pipeline run you performed [above](https://jenkins.io/doc/tutorials/build-a-python-app-with-pyinstaller/#add-a-final-deliver-stage-to-your-pipeline). To do this, click the top row (representing the most recent Pipeline run) on the main Jenkins’s **Activity** page.
 
 2. On the results page of the Pipeline run, click **Artifacts** at the top right to access the **Artifacts** page.
 
@@ -354,3 +354,10 @@ Steps for TA examination:
 * Functional `Build` stage
 * Functional `Test` stage
 * Functional `Deliver` stage
+
+Each group member should be able to answer all of the following questions. The TA will ask each person one question selected at random, and the student must be able to answer the question to get credit for the lab.
+
+Q1: What is a `Jenkinsfile`, and where is it usually located? What does it do?
+Q2: What do stages and steps do? Can they be visualized? Show the TA an example.
+Q3: What is the use of the `agent` in each stage? Why are they using different docker images for different stages?
+Q4: What are artifacts in Jenkins usually used for?
