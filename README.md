@@ -357,7 +357,7 @@ Steps for TA examination:
 
 Each group member should be able to answer all of the following questions. The TA will ask each person one question selected at random, and the student must be able to answer the question to get credit for the lab.
 
-Q1: What is a `Jenkinsfile`, and where is it usually located? What does it do?
-Q2: What do stages and steps do? Can they be visualized? Show the TA an example.
-Q3: What is the use of the `agent` in each stage? Why are they using different docker images for different stages?
-Q4: What are artifacts in Jenkins usually used for?
+- Q1: What is a `Jenkinsfile`, and where is it usually located? What does it do?
+- Q2: What do stages and steps do? Can they be visualized? Show the TA an example.
+- Q3: What is the use of the `agent` in each stage? Why are they using different docker images for different stages?
+- Q4: What are artifacts in Jenkins usually used for?
